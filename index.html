@@ -3,22 +3,41 @@
   <head>
     <meta charset="UTF-8" />
     <title>Pojistenci</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
   </head>
   <body>
     <h1>Seznam pojištěnců</h1>
     <ul id="pojistenciList"></ul>
 
-    <script>
-      const supabaseUrl = "https://abcxyz.supabase.co"; // tvé URL
-      const supabaseKey = "TVŮJ_ANON_KEY"; // tvůj anon klíč
-      const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+    <h2>Přidat nového pojištěnce</h2>
+    <form id="addForm">
+      <input type="text" id="jmeno" placeholder="Jméno" required />
+      <input type="text" id="prijmeni" placeholder="Příjmení" required />
+      <input
+        type="text"
+        id="pojisteni"
+        placeholder='Pojisteni (JSON např. {"dum":true})'
+      />
+      <button type="submit">Přidat</button>
+    </form>
 
+    <!-- JS na konci body -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+    <script>
+      // 🔹 1️⃣ Inicializace Supabase – musí být úplně nahoře
+      const supabaseUrl = "https://sdjzimzdvlcxdnhgvmqq.supabase.co";
+      const supabaseKey =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkanppbXpkdmxjeGRuaGd2bXFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwNzg4OTcsImV4cCI6MjA4NjY1NDg5N30.vtWbNYH4RQwLv1J7lUDBFr7iVTW6rR-XWKgtjDFRzY";
+      const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+      console.log("Supabase inicializován:", supabase);
+
+      // 🔹 2️⃣ Funkce pro načtení pojištěnců
       async function nactiPojistence() {
-        let { data, error } = await supabase.from("pojistenci").select("*");
-        if (error) console.error(error);
-        else {
+        try {
+          const { data, error } = await supabase.from("pojistenci").select("*");
+          if (error) throw error;
+
           const list = document.getElementById("pojistenciList");
+          list.innerHTML = "";
           data.forEach((p) => {
             const li = document.createElement("li");
             li.textContent = `${p.jmeno} ${p.prijmeni} – ${JSON.stringify(
@@ -26,10 +45,43 @@
             )}`;
             list.appendChild(li);
           });
+        } catch (err) {
+          console.error("Chyba při načítání pojištěnců:", err);
         }
       }
 
+      // 🔹 3️⃣ Načti pojištěnce hned po inicializaci
       nactiPojistence();
+
+      // 🔹 4️⃣ Přidávání pojištěnců
+      document
+        .getElementById("addForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const jmeno = document.getElementById("jmeno").value;
+          const prijmeni = document.getElementById("prijmeni").value;
+          let pojisteni = {};
+          try {
+            const input = document.getElementById("pojisteni").value;
+            if (input) pojisteni = JSON.parse(input);
+          } catch (err) {
+            alert("Chybný formát JSON pro pojištění!");
+            return;
+          }
+
+          try {
+            const { data, error } = await supabase
+              .from("pojistenci")
+              .insert([{ jmeno, prijmeni, pojisteni }]);
+            if (error) throw error;
+
+            document.getElementById("addForm").reset();
+            nactiPojistence();
+          } catch (err) {
+            console.error("Chyba při přidávání pojištěnce:", err);
+          }
+        });
     </script>
   </body>
 </html>
