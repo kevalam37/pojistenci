@@ -48,7 +48,8 @@
       const supabaseUrl = "https://sdjzimzdvlcxdnhgvmqq.supabase.co";
       const supabaseKey =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkanppbXpkdmxjeGRuaGd2bXFxIiwicm9uIiwiaWF0IjoxNzcxMDc4ODk3LCJleHAiOjIwODY2NTQ4OTd9.vtWbNYH4RQwLv1J7lUDBFr7iVTW6rR-XWKgtjDFRzY";
-      const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+      const { createClient } = window.supabase;
+      const supabase = createClient(supabaseUrl, supabaseKey);
 
       // 🔹 Globální pro konzoli
       window.supabase = supabase;
