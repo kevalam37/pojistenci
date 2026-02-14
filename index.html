@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="cs">
   <head>
     <meta charset="UTF-8" />
@@ -41,7 +41,7 @@
           data.forEach((p) => {
             const li = document.createElement("li");
             li.textContent = `${p.jmeno} ${p.prijmeni} – ${JSON.stringify(
-              p.pojisteni
+              p.pojisteni,
             )}`;
             list.appendChild(li);
           });
