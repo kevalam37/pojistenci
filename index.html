@@ -52,11 +52,18 @@
 
       console.log("Supabase inicializován:", supabase);
 
-      // 🔹 Funkce pro načtení pojištěnců
+      // 🔹 Funkce pro načtení a výpis pojištěnců
       async function nactiPojistence() {
         try {
           const { data, error } = await supabase.from("pojistenci").select("*");
           if (error) throw error;
+
+          console.log("=== Všechny pojištěnci v DB ===");
+          data.forEach((p) => {
+            console.log(
+              `ID: ${p.id}, Jméno: ${p.jmeno}, Příjmení: ${p.prijmeni}, Pojištění: ${JSON.stringify(p.pojisteni)}`,
+            );
+          });
 
           const list = document.getElementById("pojistenciList");
           list.innerHTML = "";
@@ -100,7 +107,7 @@
           }
         });
 
-      // 🔹 Načti pojištěnce po inicializaci Supabase
+      // 🔹 Načti pojištěnce ihned po inicializaci
       nactiPojistence();
     </script>
   </body>
