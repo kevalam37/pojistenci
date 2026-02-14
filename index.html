@@ -20,22 +20,22 @@
       <button type="submit">Přidat</button>
     </form>
 
-    <!-- JS na konci body -->
+    <!-- JS až na konci body -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
     <script>
-      // 🔹 1️⃣ Inicializace Supabase – musí být úplně nahoře
+      // 🔹 Supabase inicializace – úplně první řádek
       const supabaseUrl = "https://sdjzimzdvlcxdnhgvmqq.supabase.co";
       const supabaseKey =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkanppbXpkdmxjeGRuaGd2bXFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwNzg4OTcsImV4cCI6MjA4NjY1NDg5N30.vtWbNYH4RQwLv1J7lUDBFr7iVTW6rR-XWKgtjDFRzY";
       const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
       console.log("Supabase inicializován:", supabase);
 
-      // 🔹 2️⃣ Funkce pro načtení pojištěnců
+      // 🔹 Funkce pro načtení pojištěnců
       async function nactiPojistence() {
         try {
           const { data, error } = await supabase.from("pojistenci").select("*");
           if (error) throw error;
-
           const list = document.getElementById("pojistenciList");
           list.innerHTML = "";
           data.forEach((p) => {
@@ -50,15 +50,11 @@
         }
       }
 
-      // 🔹 3️⃣ Načti pojištěnce hned po inicializaci
-      nactiPojistence();
-
-      // 🔹 4️⃣ Přidávání pojištěnců
+      // 🔹 Přidání pojištěnce
       document
         .getElementById("addForm")
         .addEventListener("submit", async (e) => {
           e.preventDefault();
-
           const jmeno = document.getElementById("jmeno").value;
           const prijmeni = document.getElementById("prijmeni").value;
           let pojisteni = {};
@@ -66,7 +62,7 @@
             const input = document.getElementById("pojisteni").value;
             if (input) pojisteni = JSON.parse(input);
           } catch (err) {
-            alert("Chybný formát JSON pro pojištění!");
+            alert("Chybný JSON pro pojištění!");
             return;
           }
 
@@ -75,13 +71,15 @@
               .from("pojistenci")
               .insert([{ jmeno, prijmeni, pojisteni }]);
             if (error) throw error;
-
             document.getElementById("addForm").reset();
             nactiPojistence();
           } catch (err) {
             console.error("Chyba při přidávání pojištěnce:", err);
           }
         });
+
+      // 🔹 Načti pojištěnce po inicializaci Supabase
+      nactiPojistence();
     </script>
   </body>
 </html>
