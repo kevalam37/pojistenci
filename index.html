@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Pojistenci</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
+  </head>
+  <body>
+    <h1>Seznam pojištěnců</h1>
+    <ul id="pojistenciList"></ul>
+
+    <script>
+      const supabaseUrl = "https://abcxyz.supabase.co"; // tvé URL
+      const supabaseKey = "TVŮJ_ANON_KEY"; // tvůj anon klíč
+      const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+      async function nactiPojistence() {
+        let { data, error } = await supabase.from("pojistenci").select("*");
+        if (error) console.error(error);
+        else {
+          const list = document.getElementById("pojistenciList");
+          data.forEach((p) => {
+            const li = document.createElement("li");
+            li.textContent = `${p.jmeno} ${p.prijmeni} – ${JSON.stringify(
+              p.pojisteni
+            )}`;
+            list.appendChild(li);
+          });
+        }
+      }
+
+      nactiPojistence();
+    </script>
+  </body>
+</html>
