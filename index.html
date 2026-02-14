@@ -47,8 +47,11 @@
       // 🔹 Supabase inicializace – úplně první řádek
       const supabaseUrl = "https://sdjzimzdvlcxdnhgvmqq.supabase.co";
       const supabaseKey =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkanppbXpkdmxjeGRuaGd2bXFxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzEwNzg4OTcsImV4cCI6MjA4NjY1NDg5N30.vtWbNYH4RQwLv1J7lUDBFr7iVTW6rR-XWKgtjDFRzY";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNkanppbXpkdmxjeGRuaGd2bXFxIiwicm9uIiwiaWF0IjoxNzcxMDc4ODk3LCJleHAiOjIwODY2NTQ4OTd9.vtWbNYH4RQwLv1J7lUDBFr7iVTW6rR-XWKgtjDFRzY";
       const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
+      // 🔹 Globální pro konzoli
+      window.supabase = supabase;
 
       console.log("Supabase inicializován:", supabase);
 
@@ -58,20 +61,22 @@
           const { data, error } = await supabase.from("pojistenci").select("*");
           if (error) throw error;
 
-          console.log("=== Všechny pojištěnci v DB ===");
-          data.forEach((p) => {
-            console.log(
-              `ID: ${p.id}, Jméno: ${p.jmeno}, Příjmení: ${p.prijmeni}, Pojištění: ${JSON.stringify(p.pojisteni)}`,
-            );
-          });
+          console.log("=== Všechny pojištěnci v DB ===", data);
 
           const list = document.getElementById("pojistenciList");
           list.innerHTML = "";
-          data.forEach((p) => {
+
+          if (data.length === 0) {
             const li = document.createElement("li");
-            li.textContent = `${p.jmeno} ${p.prijmeni} – ${JSON.stringify(p.pojisteni)}`;
+            li.textContent = "Žádní pojištěnci zatím.";
             list.appendChild(li);
-          });
+          } else {
+            data.forEach((p) => {
+              const li = document.createElement("li");
+              li.textContent = `${p.jmeno} ${p.prijmeni} – ${JSON.stringify(p.pojisteni)}`;
+              list.appendChild(li);
+            });
+          }
         } catch (err) {
           console.error("Chyba při načítání pojištěnců:", err);
         }
