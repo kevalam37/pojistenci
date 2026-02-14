@@ -3,6 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <title>Pojistenci</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        padding: 20px;
+        max-width: 600px;
+        margin: auto;
+      }
+      input {
+        margin: 5px 0;
+        padding: 5px;
+        width: 100%;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 10px;
+        padding: 5px 10px;
+      }
+      ul {
+        margin-top: 20px;
+      }
+    </style>
   </head>
   <body>
     <h1>Seznam pojištěnců</h1>
@@ -15,12 +36,12 @@
       <input
         type="text"
         id="pojisteni"
-        placeholder='Pojisteni (JSON např. {"dum":true})'
+        placeholder='Pojištění (JSON např. {"dum":true})'
       />
       <button type="submit">Přidat</button>
     </form>
 
-    <!-- JS až na konci body -->
+    <!-- JS na konci body -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/supabase.min.js"></script>
     <script>
       // 🔹 Supabase inicializace – úplně první řádek
@@ -36,13 +57,12 @@
         try {
           const { data, error } = await supabase.from("pojistenci").select("*");
           if (error) throw error;
+
           const list = document.getElementById("pojistenciList");
           list.innerHTML = "";
           data.forEach((p) => {
             const li = document.createElement("li");
-            li.textContent = `${p.jmeno} ${p.prijmeni} – ${JSON.stringify(
-              p.pojisteni,
-            )}`;
+            li.textContent = `${p.jmeno} ${p.prijmeni} – ${JSON.stringify(p.pojisteni)}`;
             list.appendChild(li);
           });
         } catch (err) {
@@ -50,11 +70,12 @@
         }
       }
 
-      // 🔹 Přidání pojištěnce
+      // 🔹 Přidávání pojištěnců
       document
         .getElementById("addForm")
         .addEventListener("submit", async (e) => {
           e.preventDefault();
+
           const jmeno = document.getElementById("jmeno").value;
           const prijmeni = document.getElementById("prijmeni").value;
           let pojisteni = {};
@@ -71,6 +92,7 @@
               .from("pojistenci")
               .insert([{ jmeno, prijmeni, pojisteni }]);
             if (error) throw error;
+
             document.getElementById("addForm").reset();
             nactiPojistence();
           } catch (err) {
