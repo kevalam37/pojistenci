@@ -3,8 +3,9 @@
 // =======================
 import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
 
+// ASCII-only key
 const supabaseUrl = "https://sdjzimzdvlcxdnhgvmqq.supabase.co";
-const supabaseKey = "sb_publishable_-ruDf1T5uX8Gknhjkg6scg_yxG4hvAo"; // nahraď svým klíčem
+const supabaseKey = "sb_publishable_-ruDf1T5uX8Gknhjkg6scg_yxG4hvAo";
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
