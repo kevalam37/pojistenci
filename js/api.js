@@ -29,3 +29,7 @@ export async function addPojistenec(pojistenec) {
 
   if (error) throw error;
 }
+export async function addPojisteni(pojisteni) {
+  const { error } = await supabase.from("pojisteni").insert([pojisteni]);
+  if (error) throw error;
+}

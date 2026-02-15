@@ -1,15 +1,57 @@
-<header>
-  <nav class="top-menu">
-    <div class="logo">PojištěníApp</div>
-    <ul class="menu-items">
-      <li><a href="pojistenci.html">Pojištěnci</a></li>
-      <li><a href="pojisteni.html">Pojištění</a></li>
-      <li><a href="o_aplikaci.html">O aplikaci</a></li>
-      <li><a href="admin.html">Admin</a></li>
-      <li><a href="agent.html">Agent</a></li>
-      <li><a href="pojistenec.html">Pojištěnec</a></li>
-      <li><a href="#" id="logout">Odhlásit</a></li>
-    </ul>
-    <button class="menu-toggle">☰</button>
-  </nav>
-</header>
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Přidat pojištění – Pojištěnec</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav class="top-menu">
+        <div class="logo">PojištěníApp</div>
+        <ul class="menu-items">
+          <li><a href="index.html">Hlavní</a></li>
+          <li><a href="pojistenci.html">Pojištěnci</a></li>
+          <li><a href="pojištění.html">Pojištění</a></li>
+          <li><a href="admin.html">Admin</a></li>
+          <li><a href="#" id="logout">Odhlásit</a></li>
+        </ul>
+        <button class="menu-toggle">☰</button>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h1 id="pageTitle">Přidat pojištění k …</h1>
+
+      <form id="pridatPojisteniForm" class="form-grid">
+        <div class="form-group">
+          <label for="castka">Částka</label>
+          <input type="number" id="castka" required />
+        </div>
+
+        <div class="form-group">
+          <label for="predmet">Předmět pojištění</label>
+          <input type="text" id="predmet" required />
+        </div>
+
+        <div class="form-group">
+          <label for="platnostOd">Platnost od</label>
+          <input type="date" id="platnostOd" required />
+        </div>
+
+        <div class="form-group">
+          <label for="platnostDo">Platnost do</label>
+          <input type="date" id="platnostDo" required />
+        </div>
+
+        <div class="button-wrapper full-width">
+          <button type="submit" class="btn-primary">Uložit</button>
+        </div>
+        <div id="formMessage" class="form-message full-width"></div>
+      </form>
+    </main>
+
+    <script type="module" src="js/pridat_pojisteni.js"></script>
+  </body>
+</html>
