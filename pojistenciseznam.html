@@ -1,15 +1,93 @@
-<header>
-  <nav class="top-menu">
-    <div class="logo">PojištěníApp</div>
-    <ul class="menu-items">
-      <li><a href="pojistenci.html">Pojištěnci</a></li>
-      <li><a href="pojisteni.html">Pojištění</a></li>
-      <li><a href="o_aplikaci.html">O aplikaci</a></li>
-      <li><a href="admin.html">Admin</a></li>
-      <li><a href="agent.html">Agent</a></li>
-      <li><a href="pojistenec.html">Pojištěnec</a></li>
-      <li><a href="#" id="logout">Odhlásit</a></li>
-    </ul>
-    <button class="menu-toggle">☰</button>
-  </nav>
-</header>
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Seznam pojištěnců – PojištěníApp</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+      }
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 0.5rem;
+        text-align: left;
+      }
+      th {
+        background-color: #f0f0f0;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 0.3rem 0.6rem;
+        cursor: pointer;
+        border-radius: 4px;
+      }
+      .pagination {
+        margin-top: 1rem;
+        text-align: center;
+      }
+      .pagination button {
+        margin: 0 0.2rem;
+        padding: 0.3rem 0.6rem;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <nav class="top-menu">
+        <div class="logo">PojištěníApp</div>
+        <ul class="menu-items">
+          <li><a href="index.html">Hlavní</a></li>
+          <li><a href="novypojistenec.html">Nový pojištěnec</a></li>
+          <li><a href="pojištění.html">Pojištění</a></li>
+          <li><a href="admin.html">Admin</a></li>
+          <li><a href="#" id="logout">Odhlásit</a></li>
+        </ul>
+        <button class="menu-toggle">☰</button>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h1>Seznam pojištěnců</h1>
+      <button
+        class="btn-primary"
+        onclick="window.location.href = 'novypojistenec.html'"
+      >
+        Nový pojištěnec
+      </button>
+
+      <table id="pojistenciTable">
+        <thead>
+          <tr>
+            <th>Jméno</th>
+            <th>Bydliště</th>
+            <th>Akce</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Data se načtou JS -->
+        </tbody>
+      </table>
+
+      <div class="pagination">
+        <button id="prevPage">&laquo; Předchozí</button>
+        <span id="pageInfo"></span>
+        <button id="nextPage">Další &raquo;</button>
+      </div>
+    </main>
+
+    <script type="module" src="js/pojistenciseznam.js"></script>
+    <script type="module">
+      import { loadPojistenci } from "./js/pojistenciseznam.js";
+      loadPojistenci();
+    </script>
+  </body>
+</html>
