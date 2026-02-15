@@ -3,29 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>Pojistenci</title>
-    <style>
-      body {
-        font-family: sans-serif;
-        padding: 20px;
-        max-width: 600px;
-        margin: auto;
-      }
-      input {
-        margin: 5px 0;
-        padding: 5px;
-        width: 100%;
-        box-sizing: border-box;
-      }
-      button {
-        margin-top: 10px;
-        padding: 5px 10px;
-      }
-      ul {
-        margin-top: 20px;
-      }
-    </style>
+    <link rel="stylesheet" href="css/style.css" />
   </head>
-
   <body>
     <h1>Seznam pojištěnců</h1>
     <ul id="pojistenciList"></ul>
@@ -42,78 +21,6 @@
       <button type="submit">Přidat</button>
     </form>
 
-    <script type="module">
-      import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm";
-
-      const supabaseUrl = "https://sdjzimzdvlcxdnhgvmqq.supabase.co";
-      const supabaseKey = "sb_publishable_-ruDf1T5uX8Gknhjkg6scg_yxG4hvAo"; // ponech svůj skutečný klíč
-
-      const supabase = createClient(supabaseUrl, supabaseKey);
-
-      console.log("Supabase inicializován:", supabase);
-
-      async function nactiPojistence() {
-        try {
-          const { data, error } = await supabase.from("pojistenci").select("*");
-
-          if (error) throw error;
-
-          console.log("=== Data z DB ===", data);
-
-          const list = document.getElementById("pojistenciList");
-          list.innerHTML = "";
-
-          if (!data || data.length === 0) {
-            const li = document.createElement("li");
-            li.textContent = "Žádní pojištěnci zatím.";
-            list.appendChild(li);
-            return;
-          }
-
-          data.forEach((p) => {
-            const li = document.createElement("li");
-            li.textContent =
-              p.jmeno + " " + p.prijmeni + " – " + JSON.stringify(p.pojisteni);
-            list.appendChild(li);
-          });
-        } catch (err) {
-          console.error("Chyba při načítání:", err);
-        }
-      }
-
-      document
-        .getElementById("addForm")
-        .addEventListener("submit", async (e) => {
-          e.preventDefault();
-
-          const jmeno = document.getElementById("jmeno").value;
-          const prijmeni = document.getElementById("prijmeni").value;
-
-          let pojisteni = {};
-          try {
-            const input = document.getElementById("pojisteni").value;
-            if (input) pojisteni = JSON.parse(input);
-          } catch {
-            alert("Chybný JSON formát!");
-            return;
-          }
-
-          try {
-            const { error } = await supabase
-              .from("pojistenci")
-              .insert([{ jmeno, prijmeni, pojisteni }]);
-
-            if (error) throw error;
-
-            document.getElementById("addForm").reset();
-            nactiPojistence();
-          } catch (err) {
-            console.error("Chyba při ukládání:", err);
-          }
-        });
-
-      // první načtení
-      nactiPojistence();
-    </script>
+    <script type="module" src="js/main.js"></script>
   </body>
 </html>
