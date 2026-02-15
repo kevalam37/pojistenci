@@ -2,24 +2,50 @@
 <html lang="cs">
   <head>
     <meta charset="UTF-8" />
-    <title>Pojistenci</title>
+    <title>Pojistenci – Wireframes</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <h1>Seznam pojištěnců</h1>
-    <ul id="pojistenciList"></ul>
+    <h1>Správa pojištěnců</h1>
 
-    <h2>Přidat nového pojištěnce</h2>
-    <form id="addForm">
-      <input type="text" id="jmeno" placeholder="Jméno" required />
-      <input type="text" id="prijmeni" placeholder="Příjmení" required />
-      <input
-        type="text"
-        id="pojisteni"
-        placeholder='Pojištění (JSON např. {"dum":true})'
-      />
-      <button type="submit">Přidat</button>
-    </form>
+    <!-- ROLE SECTIONS -->
+    <section id="adminView" style="display: none">
+      <h2>Admin View</h2>
+      <p>Může přidávat, upravovat a mazat všechny pojištěnce.</p>
+      <ul id="adminList"></ul>
+      <form id="adminForm">
+        <input type="text" id="adminJmeno" placeholder="Jméno" required />
+        <input type="text" id="adminPrijmeni" placeholder="Příjmení" required />
+        <input
+          type="text"
+          id="adminPojisteni"
+          placeholder='Pojištění (JSON např. {"dum":true})'
+        />
+        <button type="submit">Přidat</button>
+      </form>
+    </section>
+
+    <section id="clerkView" style="display: none">
+      <h2>Clerk View</h2>
+      <p>Může přidávat pojištěnce a číst seznam.</p>
+      <ul id="clerkList"></ul>
+      <form id="clerkForm">
+        <input type="text" id="clerkJmeno" placeholder="Jméno" required />
+        <input type="text" id="clerkPrijmeni" placeholder="Příjmení" required />
+        <input
+          type="text"
+          id="clerkPojisteni"
+          placeholder='Pojištění (JSON např. {"auto":true})'
+        />
+        <button type="submit">Přidat</button>
+      </form>
+    </section>
+
+    <section id="guestView" style="display: none">
+      <h2>Guest View</h2>
+      <p>Jen čtení seznamu pojištěnců.</p>
+      <ul id="guestList"></ul>
+    </section>
 
     <script type="module" src="js/main.js"></script>
   </body>
