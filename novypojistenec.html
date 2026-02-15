@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Nový pojištěnec – PojištěníApp</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+
+  <body>
+    <header>
+      <nav class="top-menu">
+        <div class="logo">PojištěníApp</div>
+        <ul class="menu-items">
+          <li><a href="pojistenci.html">Pojištěnci</a></li>
+          <li><a href="pojisteni.html">Pojištění</a></li>
+          <li><a href="o_aplikaci.html">O aplikaci</a></li>
+          <li><a href="admin.html">Admin</a></li>
+          <li><a href="agent.html">Agent</a></li>
+          <li><a href="pojistenec.html">Klient</a></li>
+          <li><a href="#" id="logout">Odhlásit</a></li>
+        </ul>
+        <button class="menu-toggle">☰</button>
+      </nav>
+    </header>
+
+    <main class="container">
+      <h1>Nový pojištěnec</h1>
+
+      <form id="novyPojistenecForm" class="form-grid">
+        <div class="form-group">
+          <label for="jmeno">Jméno</label>
+          <input type="text" id="jmeno" required />
+        </div>
+
+        <div class="form-group">
+          <label for="prijmeni">Příjmení</label>
+          <input type="text" id="prijmeni" required />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" required />
+        </div>
+
+        <div class="form-group">
+          <label for="telefon">Telefon</label>
+          <input type="tel" id="telefon" />
+        </div>
+
+        <div class="form-group">
+          <label for="ulice">Ulice a číslo popisné</label>
+          <input type="text" id="ulice" />
+        </div>
+
+        <div class="form-group">
+          <label for="mesto">Město</label>
+          <input type="text" id="mesto" />
+        </div>
+
+        <div class="form-group full-width">
+          <label for="psc">PSČ</label>
+          <input type="text" id="psc" />
+        </div>
+
+        <div class="button-wrapper full-width">
+          <button type="submit" class="btn-primary">Uložit</button>
+        </div>
+        <div id="formMessage" class="form-message full-width"></div>
+      </form>
+    </main>
+
+    <!-- script musí být module -->
+    <script type="module" src="js/novypojistenec.js"></script>
+  </body>
+</html>
