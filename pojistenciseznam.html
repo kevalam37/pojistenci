@@ -12,31 +12,24 @@
       }
       th,
       td {
-        border: 1px solid #ccc;
+        border: 1px solid #ddd;
         padding: 0.5rem;
         text-align: left;
       }
       th {
-        background-color: #f0f0f0;
+        background-color: #f2f2f2;
       }
       .btn-primary {
         background-color: #007bff;
         color: white;
         border: none;
-        padding: 0.3rem 0.6rem;
+        padding: 0.3rem 0.7rem;
         cursor: pointer;
         border-radius: 4px;
+        font-size: 0.9rem;
       }
-      .pagination {
-        margin-top: 1rem;
-        text-align: center;
-      }
-      .pagination button {
-        margin: 0 0.2rem;
-        padding: 0.3rem 0.6rem;
-        border-radius: 4px;
-        border: 1px solid #ccc;
-        cursor: pointer;
+      .top-button {
+        margin-bottom: 1rem;
       }
     </style>
   </head>
@@ -57,12 +50,11 @@
 
     <main class="container">
       <h1>Seznam pojištěnců</h1>
-      <button
-        class="btn-primary"
-        onclick="window.location.href = 'novypojistenec.html'"
+
+      <!-- tlačítko Nový pojištěnec -->
+      <a href="novypojistenec.html" class="btn-primary top-button"
+        >Nový pojištěnec</a
       >
-        Nový pojištěnec
-      </button>
 
       <table id="pojistenciTable">
         <thead>
@@ -73,21 +65,57 @@
           </tr>
         </thead>
         <tbody>
-          <!-- Data se načtou JS -->
+          <!-- sem se načtou pojištěnci -->
         </tbody>
       </table>
-
-      <div class="pagination">
-        <button id="prevPage">&laquo; Předchozí</button>
-        <span id="pageInfo"></span>
-        <button id="nextPage">Další &raquo;</button>
-      </div>
     </main>
 
-    <script type="module" src="js/pojistenciseznam.js"></script>
     <script type="module">
-      import { loadPojistenci } from "./js/pojistenciseznam.js";
-      loadPojistenci();
+      import { getPojistenci } from "./js/api.js";
+
+      const tbody = document.querySelector("#pojistenciTable tbody");
+
+      async function renderPojistenci() {
+        try {
+          const data = await getPojistenci();
+          tbody.innerHTML = "";
+
+          if (!data || data.length === 0) {
+            tbody.innerHTML = `<tr><td colspan="3">Žádní pojištěnci zatím.</td></tr>`;
+            return;
+          }
+
+          data.forEach((p) => {
+            const fullName = `${p.jmeno || ""} ${p.prijmeni || ""}`;
+            const bydlist = `${p.ulice || ""}, ${p.mesto || ""}`;
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td>${fullName}</td>
+              <td>${bydlist}</td>
+              <td>
+                <button class="btn-primary pridatPojisteniBtn">Přidat pojištění</button>
+              </td>
+            `;
+
+            // tlačítko posílá UUID a jméno do pridatpojisteni.html
+            tr.querySelector(".pridatPojisteniBtn").addEventListener(
+              "click",
+              () => {
+                const url = `pridatpojisteni.html?id=${p.id}&jmeno=${encodeURIComponent(fullName)}`;
+                window.location.href = url;
+              },
+            );
+
+            tbody.appendChild(tr);
+          });
+        } catch (err) {
+          console.error("Chyba při načítání pojištěnců:", err);
+          tbody.innerHTML = `<tr><td colspan="3">Chyba při načítání pojištěnců.</td></tr>`;
+        }
+      }
+
+      renderPojistenci();
     </script>
   </body>
 </html>

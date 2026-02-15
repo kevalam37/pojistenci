@@ -15,7 +15,7 @@ export const supabase = createClient(supabaseUrl, supabaseKey);
 export async function getPojistenci() {
   const { data, error } = await supabase
     .from("pojistenci")
-    .select("jmeno, prijmeni, email, telefon, ulice, mesto, psc");
+    .select("id,jmeno, prijmeni, email, telefon, ulice, mesto, psc");
 
   if (error) throw error;
   return data;
