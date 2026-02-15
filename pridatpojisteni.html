@@ -2,17 +2,50 @@
 <html lang="cs">
   <head>
     <meta charset="UTF-8" />
-    <title>Přidat pojištění – Pojištěnec</title>
+    <title>Přidat pojištění – PojištěníApp</title>
     <link rel="stylesheet" href="css/style.css" />
+    <style>
+      .form-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+        max-width: 600px;
+        margin-top: 1rem;
+      }
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .full-width {
+        grid-column: 1 / -1;
+      }
+      .btn-primary {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        cursor: pointer;
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .form-message {
+        margin-top: 0.5rem;
+      }
+      .form-message.error {
+        color: red;
+      }
+      .form-message.success {
+        color: green;
+      }
+    </style>
   </head>
-
   <body>
     <header>
       <nav class="top-menu">
         <div class="logo">PojištěníApp</div>
         <ul class="menu-items">
           <li><a href="index.html">Hlavní</a></li>
-          <li><a href="pojistenci.html">Pojištěnci</a></li>
+          <li><a href="novypojistenec.html">Nový pojištěnec</a></li>
           <li><a href="pojištění.html">Pojištění</a></li>
           <li><a href="admin.html">Admin</a></li>
           <li><a href="#" id="logout">Odhlásit</a></li>
@@ -22,17 +55,46 @@
     </header>
 
     <main class="container">
-      <h1 id="pageTitle">Přidat pojištění k …</h1>
+      <h1 id="nadpis">Přidat pojištění k …</h1>
 
       <form id="pridatPojisteniForm" class="form-grid">
+        <div class="form-group full-width">
+          <label for="typPojisteni">Pojištění</label>
+          <select id="typPojisteni" required>
+            <option value="">-- Vyber typ pojištění --</option>
+            <option value="Životní pojištění">Životní pojištění</option>
+            <option value="Pojištění schopnosti splácet">
+              Pojištění schopnosti splácet
+            </option>
+            <option value="Pojištění domácnosti a nemovitosti">
+              Pojištění domácnosti a nemovitosti
+            </option>
+            <option value="Cestovní pojištění">Cestovní pojištění</option>
+            <option value="Pojištění osobních věcí a karet">
+              Pojištění osobních věcí a karet
+            </option>
+            <option value="Havarijní pojištění a povinné ručení">
+              Havarijní pojištění a povinné ručení
+            </option>
+            <option value="Pojištění odpovědnosti z občanského života">
+              Pojištění odpovědnosti z občanského života
+            </option>
+          </select>
+        </div>
+
         <div class="form-group">
           <label for="castka">Částka</label>
-          <input type="number" id="castka" required />
+          <input type="number" id="castka" min="0" step="0.01" required />
         </div>
 
         <div class="form-group">
           <label for="predmet">Předmět pojištění</label>
-          <input type="text" id="predmet" required />
+          <input
+            type="text"
+            id="predmet"
+            placeholder="např. dům, byt, chalupa"
+            required
+          />
         </div>
 
         <div class="form-group">
@@ -45,13 +107,14 @@
           <input type="date" id="platnostDo" required />
         </div>
 
-        <div class="button-wrapper full-width">
+        <div class="form-group full-width" style="text-align: center">
           <button type="submit" class="btn-primary">Uložit</button>
         </div>
+
         <div id="formMessage" class="form-message full-width"></div>
       </form>
     </main>
 
-    <script type="module" src="js/pridat_pojisteni.js"></script>
+    <script type="module" src="js/pridatpojisteni.js"></script>
   </body>
 </html>
